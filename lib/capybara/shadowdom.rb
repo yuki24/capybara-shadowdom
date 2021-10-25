@@ -25,6 +25,6 @@ module Capybara
       end
     end
 
-    Capybara::Node::Element.include ShadowRootSupport
+    Capybara::Node::Element.include Shadowdom
   end
 end
