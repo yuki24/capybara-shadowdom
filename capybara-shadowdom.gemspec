@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-require_relative "lib/capybara/shadowdom/version"
+require_relative "lib/capybara/shadow_dom/version"
 
 Gem::Specification.new do |spec|
   spec.name          = "capybara-shadowdom"
-  spec.version       = Capybara::Shadowdom::VERSION
+  spec.version       = Capybara::ShadowDOM::VERSION
   spec.authors       = ["Yuki Nishijima"]
   spec.email         = ["yuki24@hey.com"]
 

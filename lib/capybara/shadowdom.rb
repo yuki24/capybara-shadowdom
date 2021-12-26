@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 require_relative "node/shadow_root"
-require_relative "shadowdom/version"
+require_relative "shadow_dom/version"
 
 module Capybara
-  module Shadowdom
+  module ShadowDOM
     # Adds a way to retrieve the shadow root object of an element. For example, given the HTML below:
     #
     #   <awesome-element>
@@ -38,6 +38,6 @@ module Capybara
       end
     end
 
-    Capybara::Node::Element.include Shadowdom
+    Capybara::Node::Element.include ShadowDOM
   end
 end
