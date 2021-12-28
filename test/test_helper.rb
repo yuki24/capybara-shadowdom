@@ -12,7 +12,11 @@ require 'capybara'
 require 'capybara/dsl'
 require 'capybara/shadowdom'
 
-driver = ENV['JS_DRIVER'].to_sym || :selenium_chrome
+Capybara.register_driver :safari do |app|
+  Capybara::Selenium::Driver.new(app, browser: :safari)
+end
+
+driver = ENV['JS_DRIVER']&.to_sym || :selenium_chrome
 Capybara.server = :webrick
 Capybara.default_driver = driver
 Capybara.javascript_driver = driver
