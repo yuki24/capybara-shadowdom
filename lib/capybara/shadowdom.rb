@@ -31,13 +31,30 @@ module Capybara
     def shadow_root
       root_node = evaluate_script("this.shadowRoot")
 
-      if root_node
-        Capybara::Node::ShadowRoot.new(session, root_node.base, nil, nil)
-      else
-        self
-      end
-    end
+      return if root_node.nil?
 
-    Capybara::Node::Element.include ShadowDOM
+      node = if defined?(::Selenium::WebDriver::ShadowRoot) && root_node.is_a?(::Selenium::WebDriver::ShadowRoot)
+               # Selenium >= 4.1.x
+               driver.send(:build_node, root_node)
+             elsif root_node.is_a?(Hash)
+               bridge = session.driver.browser.send(:bridge)
+
+               element = if defined?(::Selenium::WebDriver::ShadowRoot)
+                           # Selenium ~> 4.0.x
+                           ::Selenium::WebDriver::ShadowRoot.new(bridge, root_node[::Selenium::WebDriver::ShadowRoot::ROOT_KEY])
+                         else
+                           # Selenium ~> 3.x
+                           ::Selenium::WebDriver::Element.new(bridge, root_node["shadow-6066-11e4-a52e-4f735466cecf"])
+                         end
+
+               session.driver.send(:build_node, element)
+             elsif root_node.is_a?(::Capybara::Node::Element)
+               root_node
+             end
+
+      ::Capybara::Node::ShadowRoot.new(session, node, node, nil)
+    end
   end
 end
+
+::Capybara::Node::Element.include(::Capybara::ShadowDOM)

@@ -11,4 +11,3 @@ class Capybara::Node::ShadowRoot < Capybara::Node::Element
       .join
   end
 end
-
