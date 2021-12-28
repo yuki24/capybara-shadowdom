@@ -49,7 +49,7 @@ module Capybara
 
                session.driver.send(:build_node, element)
              elsif root_node.is_a?(::Capybara::Node::Element)
-               root_node
+               root_node.base
              end
 
       ::Capybara::Node::ShadowRoot.new(session, node, node, nil)
