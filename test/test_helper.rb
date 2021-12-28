@@ -12,6 +12,20 @@ require 'capybara'
 require 'capybara/dsl'
 require 'capybara/shadowdom'
 
+begin
+  require "capybara/cuprite"
+
+  Capybara.register_driver :cuprite do |app|
+    Capybara::Cuprite::Driver.new(app, window_size: [1200, 800])
+  end
+rescue LoadError
+end
+
+begin
+  require "capybara/apparition"
+rescue LoadError
+end
+
 Capybara.register_driver :safari do |app|
   Capybara::Selenium::Driver.new(app, browser: :safari)
 end

@@ -5,6 +5,8 @@ require_relative "shadow_dom/version"
 
 module Capybara
   module ShadowDOM
+    ROOT_KEY = "shadow-6066-11e4-a52e-4f735466cecf"
+
     # Adds a way to retrieve the shadow root object of an element. For example, given the HTML below:
     #
     #   <awesome-element>
@@ -39,13 +41,15 @@ module Capybara
              elsif root_node.is_a?(Hash)
                bridge = session.driver.browser.send(:bridge)
 
-               element = if defined?(::Selenium::WebDriver::ShadowRoot)
-                           # Selenium ~> 4.0.x
-                           ::Selenium::WebDriver::ShadowRoot.new(bridge, root_node[::Selenium::WebDriver::ShadowRoot::ROOT_KEY])
-                         else
-                           # Selenium ~> 3.x
-                           ::Selenium::WebDriver::Element.new(bridge, root_node["shadow-6066-11e4-a52e-4f735466cecf"])
-                         end
+               shadow_key = if defined?(::Selenium::WebDriver::ShadowRoot)
+                              # Selenium ~> 4.0.x
+                              ::Selenium::WebDriver::ShadowRoot::ROOT_KEY
+                            else
+                              # Selenium ~> 3.x
+                              ROOT_KEY
+                            end
+
+               element = ::Selenium::WebDriver::Element.new(bridge, root_node[shadow_key])
 
                session.driver.send(:build_node, element)
              elsif root_node.is_a?(::Capybara::Node::Element)

@@ -6,13 +6,13 @@ class Capybara::Node::ShadowRoot < Capybara::Node::Element
   end
 
   def text(type = nil, normalize_ws: false)
-    case base
-    when ::Capybara::Selenium::SafariNode
+    case base.class.to_s
+    when "Capybara::Selenium::SafariNode", "Capybara::Cuprite::Node"
       all("*")
         .select { |node| node.send(:parent).nil? }
         .map { |node| node.text(type, normalize_ws: normalize_ws) }
         .join
-    else # For Chrome and Edge:
+    else # For Selenium + Chrome and Selenium + Edge:
       all("*")
         .map { |node| node.text(type, normalize_ws: normalize_ws) }
         .join
