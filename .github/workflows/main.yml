@@ -34,6 +34,7 @@ jobs:
     env:
       BUNDLE_GEMFILE: gemfiles/selenium_webdriver_4_1.gemfile
       TARGET_BROWSER: 'Windows, 11, Edge, latest'
+      BROWSERSTACK_URL: ${{ secrets.BROWSERSTACK_URL }}
     steps:
       - uses: actions/checkout@v2
       - name: Set up Ruby
@@ -48,6 +49,7 @@ jobs:
     env:
       BUNDLE_GEMFILE: gemfiles/selenium_webdriver_4_1.gemfile
       TARGET_BROWSER: 'OS X, Monterey, Safari, latest'
+      BROWSERSTACK_URL: ${{ secrets.BROWSERSTACK_URL }}
     steps:
       - uses: actions/checkout@v2
       - name: Set up Ruby
