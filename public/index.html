@@ -1,0 +1,104 @@
+<html>
+  <head>
+    <title>
+      Capybara ShadowDOM Test
+    </title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+
+    <style>
+      body {
+        font-family: var(--sl-font-sans);
+        font-size: var(--sl-font-size-medium);
+        font-weight: var(--sl-font-weight-normal);
+        letter-spacing: var(--sl-letter-spacing-normal);
+        color: var(--sl-color-gray-800);
+        line-height: var(--sl-line-height-normal);
+      }
+
+      sl-form div, sl-turbo-form div {
+        margin-bottom: 2em;
+      }
+    </style>
+
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.0.0-beta.55/dist/themes/light.css">
+    <script type="module"
+            src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.0.0-beta.55/dist/shoelace.js"></script>
+  </head>
+
+  <body>
+    <div style="width: 950px; margin: auto">
+      <sl-form class="new_user" id="new_user" action="/hotwire_forms" accept-charset="UTF-8" method="post">
+        <div>
+          <sl-input label="Name" type="text" name="user[name]" id="user_name" size="medium"></sl-input>
+        </div>
+
+        <div>
+          <sl-color-picker name="user[color]" id="user_color"></sl-color-picker>
+        </div>
+
+        <div>
+          <sl-range min="0" max="100" step="1" name="user[score]" id="user_score"></sl-range>
+        </div>
+
+        <div>
+          <sl-radio-group label="Current city">
+            <sl-radio value="tokyo" name="user[current_city]" id="user_current_city_tokyo">Tokyo</sl-radio>
+            <sl-radio value="new_york" name="user[current_city]" id="user_current_city_new_york">New York</sl-radio>
+            <sl-radio value="london" name="user[current_city]" id="user_current_city_london">London</sl-radio>
+          </sl-radio-group>
+        </div>
+
+        <div>
+          <sl-select placeholder="Select one" name="user[previous_city]" id="user_previous_city">
+            <sl-menu-item value="tokyo" aria-disabled="false" aria-checked="false" role="menuitem" tabindex="0">Tokyo
+            </sl-menu-item>
+            <sl-menu-item value="new_york" aria-disabled="false" aria-checked="false" role="menuitem" tabindex="-1">New
+              York
+            </sl-menu-item>
+            <sl-menu-item value="london" aria-disabled="false" aria-checked="false" role="menuitem" tabindex="-1">
+              London
+            </sl-menu-item>
+          </sl-select>
+        </div>
+
+        <div>
+          <sl-select placeholder="Select two or more" multiple="" clearable="true" name="user[past_cities][]" id="user_past_cities">
+            <sl-menu-item value="tokyo" aria-disabled="false" aria-checked="false" role="menuitem" tabindex="0">
+              Tokyo
+            </sl-menu-item>
+            <sl-menu-item value="new_york" aria-disabled="false" aria-checked="false" role="menuitem" tabindex="-1">
+              New York
+            </sl-menu-item>
+            <sl-menu-item value="london" aria-disabled="false" aria-checked="false" role="menuitem" tabindex="-1">
+              London
+            </sl-menu-item>
+          </sl-select>
+        </div>
+
+        <div>
+          <sl-checkbox value="1" name="user[remember_me]" id="user_remember_me">
+            Remember me
+          </sl-checkbox>
+        </div>
+
+        <div>
+          <sl-switch value="1" name="user[subscribe_to_emails]" id="user_subscribe_to_emails">
+            Subscribe to emails
+          </sl-switch>
+        </div>
+
+        <div>
+          <sl-textarea resize="auto" name="user[description]" id="user_description" size="medium"></sl-textarea>
+        </div>
+
+        <sl-button submit="" type="primary" data-disable-with="Create User" size="medium">
+          Create User
+        </sl-button>
+        <sl-button submit="" type="primary" data-turbo="false" data-disable-with="Submit without Turbo" size="medium">
+          Submit without Turbo
+        </sl-button>
+      </sl-form>
+    </div>
+  </body>
+</html>
