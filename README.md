@@ -49,11 +49,20 @@ end
 
 ## Browser Support
 
- * Selenium:
-   * ✅ Edge
-   * ✅ Chrome
-   * ✅ Safari
-   * ❌ Firefox
+* **Supported Selenium versions**: 3.0 and above
+* **Supported Ruby versions**: 2.7 and above
+
+### Supported drivers:
+
+| Driver                                                 | Browser           | Support | Description                 |
+| :---                                                   | :----             | :---:   | :---                        |
+| Selenium                                               | IE11              | N/A     | Shadow DOM is not supported. |
+| Selenium                                               | Edge              | ✅      | |
+| Selenium                                               | Firefox           | ❌      | Fails with `Cyclic object value`. |
+| Selenium                                               | Chrome            | ✅      |                             |
+| Selenium                                               | Safari            | ✅      |                             |
+| [`cuprite` ](https://github.com/rubycdp/cuprite)       | Embedded Chromium | ✅      |                             |
+| [`apparition`](https://github.com/twalpole/apparition) | Embedded Chromium | ❌      | `shadowRoot` node can not be retrieved. |
 
 ## Development
 
