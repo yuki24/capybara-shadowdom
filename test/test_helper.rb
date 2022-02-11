@@ -34,7 +34,7 @@ if ENV['BROWSERSTACK_URL']
   os, os_version, browser, browser_version = ENV.fetch('TARGET_BROWSER', 'Windows, 10, Edge, latest').split(", ")
 
   caps = Selenium::WebDriver::Remote::Capabilities.new(
-    name: "Capybara Shadow DOM",
+    project: "Capybara Shadow DOM",
     server: browserstack_url.host,
     user: browserstack_url.user,
     key: browserstack_url.password,
@@ -42,16 +42,9 @@ if ENV['BROWSERSTACK_URL']
     os_version: os_version,
     browser: browser,
     browser_version: browser_version,
-    "browserstack.console": "errors",
-    "browserstack.debug": true,
-    "browserstack.networkLogs": true,
+    build: ENV["CI"] ? "CI Build ##{ENV['GITHUB_RUN_NUMBER']}" : nil,
+    name: "Integration test (branch: #{ENV['GITHUB_REF_NAME']}, commit: #{ENV['GITHUB_SHA'].to_s[..8]}, job: #{ENV['GITHUB_JOB']})",
   )
-
-  # Safari has some limitations due to their security models so we have to stick with localhost:3000.
-  if browser.downcase == 'safari'
-    Capybara.app_host = "http://localhost"
-    Capybara.server_port = 3000
-  end
 
   module BrowserstackPatch
     def reset!
@@ -67,6 +60,7 @@ if ENV['BROWSERSTACK_URL']
 
   Capybara.run_server = false
   Capybara.app_host = "https://yuki24.github.io/capybara-shadowdom/"
+  driver = :browserstack
 else
   Capybara.app = ->(_env) {
     [
@@ -81,16 +75,16 @@ Capybara.register_driver :safari do |app|
   Capybara::Selenium::Driver.new(app, browser: :safari)
 end
 
-driver = ENV['JS_DRIVER']&.to_sym || case ENV['BUNDLE_GEMFILE']
-                                     when /selenium_webdriver/
-                                       ENV['JS_DRIVER'] || :selenium_chrome_headless
-                                     when /cuprite/
-                                       :cuprite
-                                     when /apparition/
-                                       :apparition
-                                     else
-                                       :selenium_chrome_headless
-                                     end
+driver ||= ENV['JS_DRIVER']&.to_sym || case ENV['BUNDLE_GEMFILE']
+                                       when /selenium_webdriver/
+                                         ENV['JS_DRIVER'] || :selenium_chrome_headless
+                                       when /cuprite/
+                                         :cuprite
+                                       when /apparition/
+                                         :apparition
+                                       else
+                                         :selenium_chrome_headless
+                                       end
 
 Capybara.server = :webrick
 Capybara.default_driver = driver

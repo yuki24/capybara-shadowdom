@@ -33,8 +33,6 @@ jobs:
     runs-on: ubuntu-18.04
     env:
       BUNDLE_GEMFILE: gemfiles/selenium_webdriver_4_1.gemfile
-      TARGET_BROWSER: 'Windows, 11, Edge, latest'
-      BROWSERSTACK_URL: ${{ secrets.BROWSERSTACK_URL }}
     steps:
       - uses: actions/checkout@v2
       - name: Set up Ruby
@@ -43,13 +41,14 @@ jobs:
           ruby-version: 3.1.0
           bundler-cache: true
       - run: bundle exec rake test
+        env:
+          TARGET_BROWSER: 'Windows, 11, Edge, latest'
+          BROWSERSTACK_URL: "${{ secrets.BROWSERSTACK_URL }}"
 
   safari:
     runs-on: ubuntu-18.04
     env:
       BUNDLE_GEMFILE: gemfiles/selenium_webdriver_4_1.gemfile
-      TARGET_BROWSER: 'OS X, Monterey, Safari, latest'
-      BROWSERSTACK_URL: ${{ secrets.BROWSERSTACK_URL }}
     steps:
       - uses: actions/checkout@v2
       - name: Set up Ruby
@@ -58,6 +57,9 @@ jobs:
           ruby-version: 3.1.0
           bundler-cache: true
       - run: bundle exec rake test
+        env:
+          TARGET_BROWSER: 'OS X, Monterey, Safari, latest'
+          BROWSERSTACK_URL: '${{ secrets.BROWSERSTACK_URL }}'
 
   firefox:
     runs-on: ubuntu-18.04
