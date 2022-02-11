@@ -44,7 +44,6 @@ if ENV['BROWSERSTACK_URL']
     browser_version: browser_version,
     "browserstack.console": "errors",
     "browserstack.debug": true,
-    "browserstack.local": true,
     "browserstack.networkLogs": true,
   )
 
@@ -56,15 +55,26 @@ if ENV['BROWSERSTACK_URL']
 
   module BrowserstackPatch
     def reset!
-      @browser&.navigate.to('about:blank')
+      @browser&.navigate&.to('about:blank')
     end
   end
 
   Capybara::Selenium::Driver.prepend BrowserstackPatch
 
   Capybara.register_driver :browserstack do |app|
-    Capybara::Selenium::Driver.new(app, browser: :remote, url: browserstack_url.to_s, desired_capabilities: caps)
+    Capybara::Selenium::Driver.new(app, browser: :remote, url: browserstack_url.to_s, capabilities: [caps])
   end
+
+  Capybara.run_server = false
+  Capybara.app_host = "https://yuki24.github.io/capybara-shadowdom/"
+else
+  Capybara.app = ->(_env) {
+    [
+      200,
+      { 'Content-Type' => 'text/html; charset=utf-8' },
+      [File.read('./test/index.html')]
+    ]
+  }
 end
 
 Capybara.register_driver :safari do |app|
@@ -85,13 +95,6 @@ driver = ENV['JS_DRIVER']&.to_sym || case ENV['BUNDLE_GEMFILE']
 Capybara.server = :webrick
 Capybara.default_driver = driver
 Capybara.javascript_driver = driver
-Capybara.app = ->(_env) {
-  [
-    200,
-    { 'Content-Type' => 'text/html; charset=utf-8' },
-    [File.read('./test/index.html')]
-  ]
-}
 
 class ShadowDOMTest < Minitest::Test
   include Capybara::DSL
