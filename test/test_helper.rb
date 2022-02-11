@@ -61,6 +61,34 @@ if ENV['BROWSERSTACK_URL']
   Capybara.run_server = false
   Capybara.app_host = "https://yuki24.github.io/capybara-shadowdom/"
   driver = :browserstack
+
+  module Minitest
+    def self.plugin_browserstack_reporter_init(_options)
+      self.reporter << Minitest::BrowserstackReporter.new
+    end
+
+    class BrowserstackReporter < AbstractReporter
+      def initialize
+        @passed = true
+      end
+
+      def start(*); end
+      def passed?(*); true; end
+
+      def record(result)
+        @passed &&= result.failures.empty?
+      end
+
+      def report(*)
+        Capybara
+          .current_session
+          .driver
+          .execute_script("browserstack_executor: #{{ action: "setSessionStatus", arguments: { status: @passed ? "passed" : "failed" }}.to_json}")
+      end
+    end
+  end
+
+  Minitest.extensions << "browserstack_reporter"
 else
   Capybara.app = ->(_env) {
     [
