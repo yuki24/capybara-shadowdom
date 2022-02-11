@@ -17,7 +17,6 @@ jobs:
           - gemfiles/selenium_webdriver_4_0.gemfile
           - gemfiles/selenium_webdriver_3.gemfile
           - gemfiles/cuprite.gemfile
-          - gemfiles/apparition.gemfile
     runs-on: ubuntu-18.04
     env:
       BUNDLE_GEMFILE: ${{ matrix.gemfile }}
