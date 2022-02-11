@@ -19,16 +19,16 @@ module Capybara
     #
     # Then You will be able to do:
     #
-    # within custom_element.shadow_root do
-    #   # Displays "Hello shadow world!":
-    #   puts page.text
+    #   within custom_element.shadow_root do
+    #     # Displays "Hello shadow world!":
+    #     puts page.text
     #
-    #   # Asserts the text within the element:
-    #   assert_text "Hello shadow world!"
+    #     # Asserts the text within the element:
+    #     assert_text "Hello shadow world!"
     #
-    #   # Input elements within the shadow DOM will also be accessible:
-    #   fill_in "#user_name", with: "awesome@example.org"
-    # end
+    #     # Input elements within the shadow DOM will also be accessible:
+    #     fill_in "#user_name", with: "awesome@example.org"
+    #   end
     #
     def shadow_root
       root_node = evaluate_script("this.shadowRoot")
