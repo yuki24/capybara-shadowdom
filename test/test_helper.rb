@@ -42,9 +42,10 @@ if ENV['BROWSERSTACK_URL']
     os_version: os_version,
     browser: browser,
     browser_version: browser_version,
-    "browserstack.console": "errors",
-    "browserstack.debug": true,
-    "browserstack.networkLogs": true,
+    name: ENV['GITHUB_REPOSITORY'] || "Local",
+    build: [ENV["CI"] ? "CI" : "Local", ENV['GITHUB_JOB'], ENV['GITHUB_REF_NAME']].join(", "),
+    project: "yuki24/capybara-shadowdom (#{ENV['GITHUB_BASE_REF']})",
+
   )
 
   # Safari has some limitations due to their security models so we have to stick with localhost:3000.
