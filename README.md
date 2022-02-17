@@ -7,7 +7,7 @@ The `capybara-shadowm` gem adds basic support for the [Shadow DOM](https://devel
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'capybara-shadowdom', git: "https://github.com/yuki24/capybara-shadowdom.git"
+gem 'capybara-shadowdom'
 ```
 
 And then execute:
