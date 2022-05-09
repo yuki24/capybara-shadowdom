@@ -31,7 +31,7 @@ module Capybara
     #   end
     #
     def shadow_root
-      root_node = evaluate_script("this.shadowRoot")
+      root_node = synchronize { evaluate_script("this.shadowRoot") }
 
       return if root_node.nil?
 
@@ -61,4 +61,4 @@ module Capybara
   end
 end
 
-::Capybara::Node::Element.include(::Capybara::ShadowDOM)
+::Capybara::Node::Element.prepend(::Capybara::ShadowDOM)
