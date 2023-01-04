@@ -68,7 +68,7 @@ jobs:
       BUNDLE_GEMFILE: gemfiles/selenium_webdriver_4_1.gemfile
       JS_DRIVER: selenium_headless
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
