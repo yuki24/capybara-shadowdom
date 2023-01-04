@@ -18,11 +18,11 @@ jobs:
           - gemfiles/selenium_webdriver_4_0.gemfile
           - gemfiles/selenium_webdriver_3.gemfile
           - gemfiles/cuprite.gemfile
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-22.04
     env:
       BUNDLE_GEMFILE: ${{ matrix.gemfile }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
@@ -31,11 +31,11 @@ jobs:
       - run: bundle exec rake test
 
   edge:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-22.04
     env:
       BUNDLE_GEMFILE: gemfiles/selenium_webdriver_4_1.gemfile
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
@@ -47,11 +47,11 @@ jobs:
           BROWSERSTACK_URL: "${{ secrets.BROWSERSTACK_URL }}"
 
   safari:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-22.04
     env:
       BUNDLE_GEMFILE: gemfiles/selenium_webdriver_4_1.gemfile
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
@@ -63,7 +63,7 @@ jobs:
           BROWSERSTACK_URL: '${{ secrets.BROWSERSTACK_URL }}'
 
   firefox:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-22.04
     env:
       BUNDLE_GEMFILE: gemfiles/selenium_webdriver_4_1.gemfile
       JS_DRIVER: selenium_headless
