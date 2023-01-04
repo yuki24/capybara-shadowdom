@@ -9,5 +9,6 @@ gem "pry-byebug"
 gem "webrick"
 gem "rexml"
 gem "apparition"
+gem "rack", "~> 2.2.3"
 
 gemspec path: "../"

@@ -21,8 +21,10 @@ end
 
 appraise "cuprite" do
   gem "cuprite"
+  gem "rack", "~> 2.2.3"
 end
 
 appraise "apparition" do
   gem "apparition"
+  gem "rack", "~> 2.2.3"
 end
