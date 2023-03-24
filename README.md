@@ -1,6 +1,6 @@
 # Shadow DOM support for Capybara
 
-The `capybara-shadowm` gem adds basic support for the [Shadow DOM](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM) to Capybara.
+The `capybara-shadowdom` gem adds basic support for the [Shadow DOM](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM) to Capybara.
 
 ## Installation
 
@@ -19,6 +19,12 @@ Or install it yourself as:
     $ gem install capybara-shadowdom
 
 ## Usage
+
+Require it in `spec_helper.rb`:
+
+```rb
+require 'capybara/shadowdom'
+```
 
 Given the custom element:
 
@@ -45,6 +51,12 @@ within custom_element.shadow_root do
   # Input elements within the shadow DOM will also be accessible:
   fill_in "#user_name", with: "awesome@example.org"
 end
+```
+
+Works also for `RSpec`:
+
+```ruby
+expect(page).to have_text("Hello shadow world!")
 ```
 
 ## Browser Support
